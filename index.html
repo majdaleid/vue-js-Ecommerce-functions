@@ -19,14 +19,14 @@
         v-cloak {
             display: none;
         }
+        input {
+            margin:10px;
+            display:block;
+        }
     </style>
 </head>
-<body id="app" v-cloak>
-    <div >
-       {{greeting}}
-       <input  @keyup.enter="greet(greeting+'!!!!!!')"   />
-    </div>
-
+<body id="app">
+     <login-form />
     <hr/>
 
     <!--<div >
@@ -37,9 +37,7 @@
 <!--<button v-on:click="isVisible=!isVisible">toggle box </button>-->
 
 
-<button @click="toggleBox">toggle box </button>
 
- <div v-if="isVisible" class="box"></div>
  
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -60,6 +58,30 @@
                 }
             }
         })
+        app.component('login-form',{
+         template:`
+         <form @submit.prevent="handleSubmit">
+            <h1>{{title}}</h1>
+            <input type="email" v-model="email" />
+            <input type="password" v-model="password" />   
+            <button>log in</button>
+         </form>
+            `,
+            data(){
+                return {
+                    title:'Login Form',
+                    email: '',
+                    password:'',
+                }
+            },
+            methods:{
+                handleSubmit(){
+                    console.log("submitted");
+                    console.log(this.email,this.password);
+                }
+            }
+        })
+
         app.mount('#app')
     </script>
 </body>
