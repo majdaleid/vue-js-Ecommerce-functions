@@ -26,109 +26,42 @@
     </style>
 </head>
 <body id="app">
-     <login-form />
-    <hr/>
-
-    <!--<div >
-        {{greeting}}
-        <input  @keyup.enter="greet(greeting+'!!!!!!')" v-model="greeting" />
-     </div>-->
-
-<!--<button v-on:click="isVisible=!isVisible">toggle box </button>-->
-
-
-
  
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<button @click="toggleBox">toggle box </button>
+ <test-box v-if="isVisible" />
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
         let app=Vue.createApp({
             data:function(){
                 return {
-                   greeting:'Hello Vue 3  kuku' ,
                    isVisible:false,
-                   isVisible2:true
+                  
                 }
             },
             methods:{
                 toggleBox(){
                     this.isVisible=!this.isVisible
                 },
-                greet(greeting){
-                    console.log(greeting)
-                }
+            },
+            updated(){
+                console.log('updated')
             }
         })
         //passing variable 
-        app.component('login-form',{
+        app.component('test-box',{
          template:`
-         <form @submit.prevent="handleSubmit">
-            <h1>{{title}}</h1>
-              <custom-input
-              v-for="(input,i) in inputs"
-              :key="i"
-              v-model="input.value" 
-                :label="input.label"
-                :type="input.type"
-                />
-           
-            <button>log in</button>
-         </form>
+         <div class="box"></div>
             `,
-
-            //you can pass label="password" and lable="enter email" as strings then you can
-            //delete the emailLabel,passwordLabel varialbe and v-bind: and the :
-            data(){
-                return {
-                    title:'Login Form',
-                    inputs:[
-                      {
-                        label:'Email',
-                        value:'',
-                        type:'email'
-                      },
-                      {
-                        label:'password',
-                        value:'',
-                        type:'password'
-                      }
-                    ],
-                  
-                }
+            created() {
+            console.log('created')
             },
-            components:['custom-input'],
-            methods:{
-                handleSubmit(){
-                    console.log("submitted");
-                    console.log(this.inputs[0].value,this.inputs[1].value);
-                }
-            }
-        })
-
-        app.component('custom-input',{
-            template:`
-            <label>
-                {{label}}
-                <input :type="type" v-model="inputValue">
-            </label>    
-            `,
-            props:['label','type','modelValue'],
-            computed:{
-            inputValue:{
-                get(){
-                  return this.modelValue
-                },
-                set(value){
-                    console.log(value)
-                    this.$emit('update:modelValue',value)
-
-                }
-            }
+            mounted() {
+            console.log('mounted')
             },
-          /*  data(){
-                return{
-                    inputValue:''
-                }
-            }*/
+            unmounted() {
+            console.log('unmounted')
+            }
         })
         app.mount('#app')
     </script>
