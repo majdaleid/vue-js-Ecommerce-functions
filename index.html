@@ -58,22 +58,29 @@
                 }
             }
         })
+        //passing variable 
         app.component('login-form',{
          template:`
          <form @submit.prevent="handleSubmit">
             <h1>{{title}}</h1>
-            <input type="email" v-model="email" />
-            <input type="password" v-model="password" />   
+            <custom-input  v-model="email"   :label="emailLabel"/>
+            <custom-input  v-model="password"   v-bind:label="passwordLabel"/>   
             <button>log in</button>
          </form>
             `,
+
+            //you can pass label="password" and lable="enter email" as strings then you can
+            //delete the emailLabel,passwordLabel varialbe and v-bind: and the :
             data(){
                 return {
                     title:'Login Form',
-                    email: '',
-                    password:'',
+                    email: 'qweqwew',
+                    password:'qweweqewqe',
+                   'emailLabel':'Email',
+                    'passwordLabel':'Password'
                 }
             },
+            components:['custom-input'],
             methods:{
                 handleSubmit(){
                     console.log("submitted");
@@ -82,6 +89,32 @@
             }
         })
 
+        app.component('custom-input',{
+            template:`
+            <label>
+                {{label}}
+                <input type="text" v-model="inputValue">
+            </label>    
+            `,
+            props:['label','modelValue'],
+            computed:{
+            inputValue:{
+                get(){
+                  return this.modelValue
+                },
+                set(value){
+                    console.log(value)
+                    this.$emit('update:modelValue',value)
+
+                }
+            }
+            },
+          /*  data(){
+                return{
+                    inputValue:''
+                }
+            }*/
+        })
         app.mount('#app')
     </script>
 </body>
