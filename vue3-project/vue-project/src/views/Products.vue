@@ -2,11 +2,9 @@
 <template>
     <h1>Products</h1>
     <main class="wrapper">
-        <h1>Products</h1>
-
         <div class="card-container">
 
-            <ProductCart v-for="(product, index) in inventory.slice(0, 8)" :key="product.id" class="card" :index="index"
+            <ProductCart v-for="(product, index) in inventory.slice(0, 9)" :key="product.id" class="card" :index="index"
                 :product="product" :addToCart="addToCart" @update-quantity="updateQuantity" />
 
         </div>

@@ -5,13 +5,12 @@
 
   <div class="recommended">
 
-    <ProductCart v-for="(product, index) in inventory.slice(0, 3)" :key="product.id" class="card" :index="index"
+    <ProductCart v-for="(product, index) in inventory.slice(0, 4)" :key="product.id" class="card" :index="index"
       :product="product" :addToCart="addToCart" @update-quantity="updateQuantity" />
   </div>
 
   <main class="wrapper">
 
-    <h2>Recommended</h2>
 
 
   </main>
