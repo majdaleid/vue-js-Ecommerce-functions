@@ -1,78 +1,39 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
-import { ref } from 'vue';
 
-import food from '../food.json'
-
-const inventory = ref(food);
-
-const addToCart = (name, index) => {
-  // Add your addToCart functionality here.
-};
-</script>
- 
 
 <template>
   Home
 
-  <div class="splash-container">
-    <div class="splash">
-      <h1>Splendid Food</h1>
-    </div>
+  <div class="recommended">
+
+    <ProductCart v-for="(product, index) in inventory.slice(0, 3)" :key="product.id" class="card" :index="index"
+      :product="product" :addToCart="addToCart" @update-quantity="updateQuantity" />
   </div>
 
   <main class="wrapper">
 
     <h2>Recommended</h2>
 
-    <div v-for="(product, i) in inventory.slice(0, 3)" :key="i" class="recommended">
-
-      <div class="card">
-        <div class="card-title">
-          {{ product.name }}
-        </div>
-        <div class="card-body">
-          <i class="icofont-10x icofont-{{product.icon}}"></i>
-          <form>
-            <div class="row">
-              <div class="cell">
-                <label>Type:</label>
-              </div>
-              <div class="cell">
-                <em>{{ product.type }}</em>
-              </div>
-            </div>
-            <div class="row">
-              <div class="cell">
-                <label>Price:</label>
-              </div>
-              <div class="cell">
-                ${{ product.price.USD }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="cell">
-                <label>Quantity:</label>
-              </div>
-              <div class="cell">
-                <input type="number" v-model.number="product.quantity">
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="card-footer">
-          <button @click="addToCart(product.name, i)" class="btn btn-light">
-            Add to cart
-          </button>
-        </div>
-      </div>
-
-
-
-
-
-    </div>
 
   </main>
 </template>
- 
+
+
+<script>
+import TheWelcome from '../components/TheWelcome.vue'
+import food from '../food.json'
+import ProductCart from '../components/ProductCart.vue'
+
+export default {
+  name: 'Home',
+  props: ['inventory', 'addToCart'],
+  components: {
+    ProductCart
+  },
+  methods: {
+    updateQuantity(index, newQuantity) {
+      this.inventory[index].quantity = parseInt(newQuantity);
+    }
+  }
+}
+
+</script>
